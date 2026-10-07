@@ -1,0 +1,208 @@
+CREATE DATABASE db_oficina;
+
+CREATE TABLE veiculo (
+    id_veiculo INTEGER NOT NULL,
+    marca CHARACTER(20),
+    modelo CHARACTER(20),
+    dono CHARACTER(20),
+    placa CHARACTER(20),
+    combustivel CHARACTER(1),
+    ano INTEGER,
+    chassi CHARACTER(20),
+    CONSTRAINT PK_veiculo PRIMARY KEY (id_veiculo)
+);
+
+CREATE TABLE ordem_servico (
+    id_os INTEGER NOT NULL,
+    id_veiculo INTEGER,
+    km_entrada INTEGER,
+    data_entrada DATE,
+    hora_entrada CHARACTER(20),
+    data_saida DATE,
+    hora_saida CHARACTER(20),
+    valor_total NUMERIC(6,2),
+    CONSTRAINT PK_ordem_servico PRIMARY KEY (id_os)
+);
+
+CREATE TABLE os_servico (
+    id_os INTEGER NOT NULL,
+    id_servico INTEGER NOT NULL,
+    valor NUMERIC(6,2),
+    CONSTRAINT PK_os_servico PRIMARY KEY (id_os, id_servico)
+);
+
+CREATE TABLE servico (
+    id_servico INTEGER NOT NULL,
+    descricao CHARACTER(20),
+    valor NUMERIC(6,2),
+    CONSTRAINT PK_servico PRIMARY KEY (id_servico)
+);
+
+CREATE TABLE os_peca (
+    id_os INTEGER NOT NULL,
+    id_peca INTEGER NOT NULL,
+    quantidade INTEGER,
+    valor NUMERIC(6,2),
+    CONSTRAINT PK_os_peca PRIMARY KEY (id_os, id_peca)
+);
+
+CREATE TABLE peca (
+    id_peca INTEGER NOT NULL,
+    descricao CHARACTER(20),
+    valor NUMERIC(6,2),
+    estoque INTEGER,
+    CONSTRAINT PK_peca PRIMARY KEY (id_peca)
+);
+
+ALTER TABLE ordem_servico ADD CONSTRAINT veiculo_ordem_servico 
+    FOREIGN KEY (id_veiculo) REFERENCES veiculo (id_veiculo);
+
+ALTER TABLE os_servico ADD CONSTRAINT ordem_servico_os_servico 
+    FOREIGN KEY (id_os) REFERENCES ordem_servico (id_os);
+
+ALTER TABLE os_servico ADD CONSTRAINT servico_os_servico 
+    FOREIGN KEY (id_servico) REFERENCES servico (id_servico);
+
+ALTER TABLE os_peca ADD CONSTRAINT ordem_servico_os_peca 
+    FOREIGN KEY (id_os) REFERENCES ordem_servico (id_os);
+
+ALTER TABLE os_peca ADD CONSTRAINT peca_os_peca 
+    FOREIGN KEY (id_peca) REFERENCES peca (id_peca);
+
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (1, 'Volkswagen', 'Fusca', 'Joao Pereira', 'PLC-1000', 'G', 1975, '9BWZZZ001VT000001');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (2, 'Ford', 'Escort', 'Maria Oliveira', 'PLC-1001', 'F', 1998, '9BWZZZ002VT000002');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (3, 'Chevrolet', 'Opala', 'Pedro Santos', 'PLC-1002', 'G', 1988, '9BWZZZ003VT000003');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (4, 'Fiat', 'Palio', 'Ana Costa', 'PLC-1003', 'F', 2012, '9BWZZZ004VT000004');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (5, 'Hyundai', 'HB20', 'Lucas Lima', 'PLC-1004', 'A', 2020, '9BWZZZ005VT000005');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (6, 'Toyota', 'Corolla', 'Carla Souza', 'PLC-1005', 'G', 2015, '9BWZZZ006VT000006');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (7, 'Honda', 'Civic', 'Bruno Alves', 'PLC-1006', 'F', 2018, '9BWZZZ007VT000007');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (8, 'Renault', 'Sandero', 'Fernanda Dias', 'PLC-1007', 'G', 2016, '9BWZZZ008VT000008');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (9, 'Chevrolet', 'Onix', 'Rafael Nunes', 'PLC-1008', 'F', 2019, '9BWZZZ009VT000009');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (10, 'Volkswagen', 'Gol', 'Juliana Rocha', 'PLC-1009', 'G', 2010, '9BWZZZ010VT000010');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (11, 'Fiat', 'Uno', 'Marcos Vieira', 'PLC-1010', 'G', 2005, '9BWZZZ011VT000011');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (12, 'Ford', 'Ka', 'Patricia Gomes', 'PLC-1011', 'F', 2014, '9BWZZZ012VT000012');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (13, 'Toyota', 'Etios', 'Thiago Ramos', 'PLC-1012', 'G', 2017, '9BWZZZ013VT000013');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (14, 'Hyundai', 'HB20S', 'Camila Teixeira', 'PLC-1013', 'F', 2021, '9BWZZZ014VT000014');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (15, 'Honda', 'Fit', 'Diego Barbosa', 'PLC-1014', 'A', 2013, '9BWZZZ015VT000015');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (16, 'Renault', 'Kwid', 'Larissa Freitas', 'PLC-1015', 'G', 2022, '9BWZZZ016VT000016');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (17, 'Volkswagen', 'Voyage', 'Gustavo Cardoso', 'PLC-1016', 'F', 2008, '9BWZZZ017VT000017');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (18, 'Chevrolet', 'Prisma', 'Beatriz Moreira', 'PLC-1017', 'G', 2011, '9BWZZZ018VT000018');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (19, 'Fiat', 'Argo', 'Eduardo Pinto', 'PLC-1018', 'F', 2020, '9BWZZZ019VT000019');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (20, 'Ford', 'Fiesta', 'Vanessa Lopes', 'PLC-1019', 'G', 2023, '9BWZZZ020VT000020');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (21, 'Jeep', 'Renegade', 'Rodrigo Farias', 'PLC-1020', 'F', 2019, '9BWZZZ021VT000021');
+INSERT INTO veiculo (id_veiculo, marca, modelo, dono, placa, combustivel, ano, chassi) VALUES (22, 'Nissan', 'Kicks', 'Aline Correia', 'PLC-1021', 'G', 2017, '9BWZZZ022VT000022');
+
+INSERT INTO servico (id_servico, descricao, valor) VALUES (101, 'Troca de Oleo', 150.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (102, 'Alinhamento', 90.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (103, 'Balanceamento', 70.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (104, 'Revisao Freios', 200.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (105, 'Troca de Correia', 320.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (106, 'Troca de Pneu', 80.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (107, 'Diagnostico Eletronico', 180.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (108, 'Troca de Bateria', 250.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (109, 'Higienizacao Ar Cond', 130.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (110, 'Troca de Velas', 110.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (111, 'Troca de Filtro de Ar', 60.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (112, 'Suspensao Dianteira', 400.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (113, 'Suspensao Traseira', 380.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (114, 'Polimento', 220.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (115, 'Troca de Amortecedor', 350.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (116, 'Revisao Geral', 500.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (117, 'Troca de Embreagem', 600.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (118, 'Reparo Eletrico', 210.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (119, 'Lavagem Completa', 50.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (120, 'Troca de Radiador', 340.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (121, 'Alinhamento 3D', 120.00);
+INSERT INTO servico (id_servico, descricao, valor) VALUES (122, 'Cambagem', 95.00);
+
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (501, 'Filtro de Oleo', 35.00, 20);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (502, 'Oleo 5W30', 45.00, 50);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (503, 'Pastilha Freio', 120.00, 15);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (504, 'Vela Ignicao', 80.00, 30);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (505, 'Correia Dentada', 95.00, 12);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (506, 'Pneu Aro 15', 380.00, 8);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (507, 'Bateria 60Ah', 420.00, 6);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (508, 'Filtro de Ar', 55.00, 25);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (509, 'Filtro de Combustivel', 65.00, 18);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (510, 'Amortecedor Dianteiro', 260.00, 10);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (511, 'Amortecedor Traseiro', 240.00, 10);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (512, 'Disco de Freio', 190.00, 14);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (513, 'Radiador', 350.00, 5);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (514, 'Lampada Farol', 40.00, 40);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (515, 'Kit Embreagem', 480.00, 4);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (516, 'Correia Alternador', 60.00, 16);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (517, 'Bomba Dagua', 150.00, 9);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (518, 'Sensor de Oxigenio', 210.00, 7);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (519, 'Mangueira de Radiador', 45.00, 22);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (520, 'Junta do Cabecote', 130.00, 6);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (521, 'Coxim do Motor', 90.00, 11);
+INSERT INTO peca (id_peca, descricao, valor, estoque) VALUES (522, 'Terminal de Direcao', 75.00, 13);
+
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1001, 1, 150000, '1995-05-10', '08:00', '1995-05-10', '12:00', 444.47);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1002, 2, 85000, '2005-08-20', '09:30', '2005-08-20', '17:00', 94.26);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1003, 3, 110000, '2026-03-01', '10:00', '2026-03-01', '15:00', 236.77);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1004, 4, 45000, '2026-03-15', '14:00', NULL, NULL, 207.23);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1005, 5, 60000, '2020-01-10', '11:15', '2020-01-10', '16:30', 499.79);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1006, 6, 72000, '2021-06-15', '13:45', '2021-06-15', '18:00', 465.72);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1007, 7, 30000, '2022-09-22', '07:50', '2022-09-22', '11:00', 588.54);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1008, 8, 95000, '2023-02-14', '16:20', '2023-02-14', '19:10', 129.56);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1009, 9, 120000, '2019-11-05', '08:40', '2019-11-05', '13:20', 320.50);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1010, 10, 15000, '2018-07-30', '15:10', '2018-07-30', '18:30', 96.98);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1011, 11, 200000, '2017-04-18', '09:05', '2017-04-18', '12:45', 204.62);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1012, 12, 5000, '2016-12-01', '12:30', '2016-12-01', '16:00', 368.05);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1013, 13, 88000, '2015-10-09', '10:50', '2015-10-09', '14:10', 95.13);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1014, 14, 22000, '2024-01-25', '17:00', NULL, NULL, 193.34);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1015, 15, 10000, '2024-05-19', '08:15', '2024-05-19', '12:50', 450.43);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1016, 16, 33000, '2025-02-11', '13:00', '2025-02-11', '17:30', 390.62);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1017, 17, 47000, '2025-06-30', '11:40', '2025-06-30', '15:20', 205.65);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1018, 18, 130000, '2013-03-03', '14:50', '2013-03-03', '18:40', 415.88);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1019, 19, 65000, '2012-08-08', '09:20', '2012-08-08', '13:10', 541.38);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1020, 20, 18000, '2011-09-17', '16:45', '2011-09-17', '20:00', 83.70);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1021, 21, 99000, '2010-10-10', '10:30', '2010-10-10', '14:40', 539.32);
+INSERT INTO ordem_servico (id_os, id_veiculo, km_entrada, data_entrada, hora_entrada, data_saida, hora_saida, valor_total) VALUES (1022, 22, 40000, '2009-12-12', '07:30', '2009-12-12', '10:50', 477.94);
+
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1001, 101, 150.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1002, 102, 90.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1003, 103, 70.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1004, 104, 200.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1005, 105, 320.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1006, 106, 80.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1007, 107, 180.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1008, 108, 250.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1009, 109, 130.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1010, 110, 110.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1011, 111, 60.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1012, 112, 400.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1013, 113, 380.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1014, 114, 220.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1015, 115, 350.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1016, 116, 500.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1017, 117, 600.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1018, 118, 210.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1019, 119, 50.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1020, 120, 340.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1021, 121, 120.00);
+INSERT INTO os_servico (id_os, id_servico, valor) VALUES (1022, 122, 95.00);
+
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1001, 504, 1, 80.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1002, 505, 2, 190.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1003, 506, 3, 1140.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1004, 507, 1, 420.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1005, 508, 2, 110.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1006, 509, 3, 195.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1007, 510, 1, 260.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1008, 511, 2, 480.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1009, 512, 3, 570.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1010, 513, 1, 350.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1011, 514, 2, 80.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1012, 515, 3, 1440.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1013, 516, 1, 60.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1014, 517, 2, 300.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1015, 518, 3, 630.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1016, 519, 1, 45.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1017, 520, 2, 260.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1018, 521, 3, 270.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1019, 522, 1, 75.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1020, 501, 2, 70.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1021, 502, 3, 135.00);
+INSERT INTO os_peca (id_os, id_peca, quantidade, valor) VALUES (1022, 503, 1, 120.00);

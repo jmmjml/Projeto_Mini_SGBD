@@ -1,0 +1,80 @@
+SELECT * FROM veiculo;
+SELECT id_veiculo, marca, modelo FROM veiculo;
+SELECT id_veiculo, modelo, placa, ano FROM veiculo;
+SELECT * FROM veiculo WHERE ano BETWEEN 1970 AND 2010;
+SELECT id_veiculo, modelo, placa, ano FROM veiculo WHERE ano BETWEEN 1970 AND 2010;
+SELECT * FROM veiculo WHERE ano BETWEEN 2015 AND 2023;
+SELECT marca, modelo, dono FROM veiculo WHERE ano >= 2018;
+SELECT * FROM veiculo WHERE combustivel = 'G';
+SELECT id_veiculo, marca, modelo, combustivel FROM veiculo WHERE combustivel = 'F';
+SELECT * FROM veiculo WHERE marca = 'Volkswagen';
+SELECT id_veiculo, modelo, dono FROM veiculo WHERE dono = 'Pedro Santos';
+SELECT * FROM veiculo WHERE id_veiculo BETWEEN 1 AND 10;
+
+SELECT * FROM ordem_servico;
+SELECT id_os, id_veiculo, data_entrada FROM ordem_servico;
+SELECT id_os, valor_total FROM ordem_servico;
+SELECT * FROM ordem_servico WHERE valor_total BETWEEN 100.00 AND 300.00;
+SELECT id_os, id_veiculo, valor_total FROM ordem_servico WHERE valor_total BETWEEN 100.00 AND 300.00;
+SELECT * FROM ordem_servico WHERE km_entrada BETWEEN 50000 AND 150000;
+SELECT id_os, km_entrada FROM ordem_servico WHERE km_entrada > 100000;
+SELECT * FROM ordem_servico WHERE data_entrada BETWEEN '2015-01-01' AND '2020-12-31';
+SELECT id_os, data_entrada, data_saida FROM ordem_servico WHERE data_entrada BETWEEN '2015-01-01' AND '2020-12-31';
+SELECT * FROM ordem_servico WHERE id_veiculo = 5;
+SELECT id_os, id_veiculo, valor_total FROM ordem_servico WHERE id_os BETWEEN 1001 AND 1010;
+
+SELECT * FROM os_servico;
+SELECT id_os, id_servico FROM os_servico;
+SELECT id_os, valor FROM os_servico;
+SELECT * FROM os_servico WHERE valor BETWEEN 100.00 AND 300.00;
+SELECT id_os, id_servico, valor FROM os_servico WHERE valor BETWEEN 100.00 AND 300.00;
+SELECT * FROM os_servico WHERE valor > 300.00;
+SELECT id_os, id_servico FROM os_servico WHERE id_servico BETWEEN 101 AND 110;
+SELECT * FROM os_servico WHERE id_os = 1005;
+SELECT id_os, valor FROM os_servico WHERE id_os BETWEEN 1001 AND 1011;
+SELECT * FROM os_servico WHERE valor <= 100.00;
+
+SELECT * FROM servico;
+SELECT id_servico, descricao FROM servico;
+SELECT id_servico, descricao, valor FROM servico WHERE valor BETWEEN 50.00 AND 150.00;
+SELECT * FROM servico WHERE valor BETWEEN 50.00 AND 150.00;
+SELECT * FROM servico WHERE valor > 300.00;
+SELECT id_servico, valor FROM servico WHERE id_servico BETWEEN 101 AND 110;
+SELECT * FROM servico WHERE descricao = 'Troca de Oleo';
+SELECT id_servico, descricao FROM servico WHERE valor <= 100.00;
+SELECT * FROM servico WHERE id_servico BETWEEN 115 AND 122;
+SELECT descricao, valor FROM servico WHERE valor >= 400.00;
+
+SELECT * FROM os_peca;
+SELECT id_os, id_peca FROM os_peca;
+SELECT id_os, quantidade, valor FROM os_peca;
+SELECT * FROM os_peca WHERE valor BETWEEN 100.00 AND 400.00;
+SELECT id_os, id_peca, valor FROM os_peca WHERE valor BETWEEN 100.00 AND 400.00;
+SELECT * FROM os_peca WHERE quantidade BETWEEN 2 AND 3;
+SELECT id_os, id_peca, quantidade FROM os_peca WHERE quantidade > 1;
+SELECT * FROM os_peca WHERE id_peca BETWEEN 501 AND 510;
+SELECT id_os, valor FROM os_peca WHERE id_os BETWEEN 1010 AND 1022;
+SELECT * FROM os_peca WHERE valor > 500.00;
+
+SELECT * FROM peca;
+SELECT id_peca, descricao FROM peca;
+SELECT id_peca, descricao, valor, estoque FROM peca WHERE valor BETWEEN 50.00 AND 200.00;
+SELECT * FROM peca WHERE valor BETWEEN 50.00 AND 200.00;
+SELECT * FROM peca WHERE estoque BETWEEN 10 AND 30;
+SELECT id_peca, descricao, estoque FROM peca WHERE estoque < 10;
+SELECT * FROM peca WHERE descricao = 'Radiador';
+SELECT id_peca, valor FROM peca WHERE valor > 300.00;
+SELECT * FROM peca WHERE id_peca BETWEEN 510 AND 520;
+SELECT descricao, valor, estoque FROM peca WHERE estoque >= 20;
+
+SELECT * FROM ordem_servico, veiculo, os_peca, peca WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_peca.id_os AND os_peca.id_peca = peca.id_peca;
+SELECT ordem_servico.id_os, ordem_servico.data_entrada, ordem_servico.id_veiculo, veiculo.modelo, veiculo.dono, os_peca.id_peca, peca.descricao FROM ordem_servico, veiculo, os_peca, peca WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_peca.id_os AND os_peca.id_peca = peca.id_peca;
+SELECT veiculo.modelo, veiculo.placa, peca.descricao, os_peca.quantidade, os_peca.valor FROM ordem_servico, veiculo, os_peca, peca WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_peca.id_os AND os_peca.id_peca = peca.id_peca;
+SELECT * FROM ordem_servico, veiculo, os_peca, peca WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_peca.id_os AND os_peca.id_peca = peca.id_peca AND veiculo.ano BETWEEN 2015 AND 2023;
+SELECT ordem_servico.id_os, veiculo.dono, peca.descricao, peca.valor FROM ordem_servico, veiculo, os_peca, peca WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_peca.id_os AND os_peca.id_peca = peca.id_peca AND peca.valor > 100.00;
+
+SELECT * FROM ordem_servico, veiculo, os_servico, servico WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_servico.id_os AND os_servico.id_servico = servico.id_servico;
+SELECT ordem_servico.id_os, ordem_servico.data_entrada, ordem_servico.id_veiculo, veiculo.modelo, veiculo.dono, os_servico.id_servico, servico.descricao FROM ordem_servico, veiculo, os_servico, servico WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_servico.id_os AND os_servico.id_servico = servico.id_servico;
+SELECT veiculo.modelo, veiculo.dono, servico.descricao, servico.valor FROM ordem_servico, veiculo, os_servico, servico WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_servico.id_os AND os_servico.id_servico = servico.id_servico;
+SELECT * FROM ordem_servico, veiculo, os_servico, servico WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_servico.id_os AND os_servico.id_servico = servico.id_servico AND servico.valor BETWEEN 100.00 AND 300.00;
+SELECT ordem_servico.id_os, veiculo.placa, servico.descricao FROM ordem_servico, veiculo, os_servico, servico WHERE ordem_servico.id_veiculo = veiculo.id_veiculo AND ordem_servico.id_os = os_servico.id_os AND os_servico.id_servico = servico.id_servico AND veiculo.combustivel = 'G';
